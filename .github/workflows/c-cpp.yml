@@ -1,0 +1,34 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential g++ cmake libgtest-dev
+
+    - name: Build GoogleTest
+      run: |
+        cd /usr/src/googletest
+        sudo cmake .
+        sudo make
+        sudo cp *.a /usr/lib/
+
+    - name: Compile tests
+      run: |
+        g++ -std=c++17 student_database.cpp tests.cpp \
+        -lgtest -lgtest_main -pthread -o tests
+
+    - name: Run tests
+      run: ./tests
