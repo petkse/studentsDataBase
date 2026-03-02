@@ -18,17 +18,12 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y build-essential g++ cmake libgtest-dev
 
-    - name: Build GoogleTest
+    - name: Build tests
       run: |
-        cd /usr/src/googletest
-        sudo cmake .
-        sudo make
-        sudo cp *.a /usr/lib/
-
-    - name: Compile tests
-      run: |
+        # Сборка GoogleTest прямо из исходников
         g++ -std=c++17 student_database.cpp tests.cpp \
-        -lgtest -lgtest_main -pthread -o tests
+        /usr/src/googletest/googletest/src/gtest-all.cc \
+        -I /usr/src/googletest/googletest/include -pthread -o tests
 
     - name: Run tests
       run: ./tests
