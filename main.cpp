@@ -36,6 +36,11 @@ void displayStudents(const std::vector<Student>& database) {
     }
 }
 
+// Функция для удаления студента из базы данных
+void removeStudent(std::vector<Student>& database) {
+    
+}
+
 int main() {
     std::vector<Student> database;
 
