@@ -38,6 +38,11 @@ void displayStudents(const std::vector<Student>& database) {
 
 // Функция для удаления студента из базы данных
 void removeStudent(std::vector<Student>& database) {
+    if (database.empty()) {
+        std::cout << "База данных пуста.\n";
+        return;
+    }
+    
     std::string name;
     std::cout << "Введите имя студента для удаления: ";
     std::cin >> name;
