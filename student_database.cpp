@@ -1,6 +1,21 @@
 #include "student_database.h"
 
-// Функция для добавления студента
+// Логика для тестов 
+void addStudentLogic(std::vector<Student>& database, const Student& s) {
+    database.push_back(s);
+}
+
+bool removeStudentLogic(std::vector<Student>& database, const std::string& name) {
+    for (auto it = database.begin(); it != database.end(); ++it) {
+        if (it->name == name) {
+            database.erase(it);
+            return true;
+        }
+    }
+    return false;
+}
+
+// Функции для меню 
 void addStudent(std::vector<Student>& database) {
     Student student;
     std::cout << "Введите имя студента: ";
@@ -12,11 +27,10 @@ void addStudent(std::vector<Student>& database) {
     std::cout << "Введите средний балл студента: ";
     std::cin >> student.gpa;
 
-    database.push_back(student);
+    addStudentLogic(database, student);
     std::cout << "Студент добавлен в базу данных.\n";
 }
 
-// Функция для вывода всех студентов
 void displayStudents(const std::vector<Student>& database) {
     std::cout << "Список студентов:\n";
     for (const Student& student : database) {
@@ -27,7 +41,6 @@ void displayStudents(const std::vector<Student>& database) {
     }
 }
 
-// Функция для удаления студента
 void removeStudent(std::vector<Student>& database) {
     if (database.empty()) {
         std::cout << "База данных пуста.\n";
@@ -38,13 +51,8 @@ void removeStudent(std::vector<Student>& database) {
     std::cout << "Введите имя студента для удаления: ";
     std::cin >> name;
 
-    for (auto i = database.begin(); i != database.end(); ++i) {
-        if (i->name == name) {
-            database.erase(i);
-            std::cout << "Студент удалён.\n";
-            return;
-        }
-    }
-
-    std::cout << "Студент не найден.\n";
+    if (removeStudentLogic(database, name))
+        std::cout << "Студент удалён.\n";
+    else
+        std::cout << "Студент не найден.\n";
 }
