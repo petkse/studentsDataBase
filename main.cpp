@@ -42,7 +42,7 @@ void removeStudent(std::vector<Student>& database) {
         std::cout << "База данных пуста.\n";
         return;
     }
-    
+
     std::string name;
     std::cout << "Введите имя студента для удаления: ";
     std::cin >> name;
@@ -54,6 +54,8 @@ void removeStudent(std::vector<Student>& database) {
             return;
         }
     }
+
+    std::cout << "Студент не найден.\n";
 }
 
 int main() {
