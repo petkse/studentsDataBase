@@ -8,22 +8,21 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
     - uses: actions/checkout@v3
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y build-essential g++ cmake libgtest-dev
+    - name: Install MinGW
+      uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: mingw-w64-x86_64-gcc
 
-    - name: Build tests
+    - name: Compile tests
       run: |
-        # Сборка GoogleTest прямо из исходников
-        g++ -std=c++17 student_database.cpp tests.cpp \
-        /usr/src/googletest/googletest/src/gtest-all.cc \
-        -I /usr/src/googletest/googletest/include -pthread -o tests
+        g++ -std=c++17 student_database.cpp tests.cpp third_party/googletest/src/gtest-all.cc ^
+        -I third_party/googletest/include -pthread -o tests.exe
 
     - name: Run tests
-      run: ./tests
+      run: tests.exe
