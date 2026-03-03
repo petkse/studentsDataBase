@@ -20,9 +20,11 @@ jobs:
         install: mingw-w64-x86_64-gcc
 
     - name: Compile tests
+      shell: bash
       run: |
-        g++ -std=c++17 student_database.cpp tests.cpp third_party/googletest/src/gtest-all.cc ^
+        g++ -std=c++17 student_database.cpp tests.cpp third_party/googletest/src/gtest-all.cc \
         -I third_party/googletest/include -pthread -o tests.exe
 
     - name: Run tests
-      run: tests.exe
+      shell: bash
+      run: ./tests.exe
